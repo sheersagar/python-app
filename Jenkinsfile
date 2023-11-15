@@ -52,8 +52,10 @@ pipeline {
                 script {
                     sh 'docker build -t ${DOCKER_IMAGE} .'
                     dockerImage = docker.image("${DOCKER_IMAGE}")
-                    dockerImage.push()
-                }
+                    docker.withRegistry('', 'dockerhub') {
+                        dockerImage.push()
+                    }
+                 }
             }
         }
     }
