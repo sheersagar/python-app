@@ -3,10 +3,10 @@ pipeline {
         label "jenkins-agent" 
     }
 
-    tools{
-        maven 'Maven3'
-        jdk 'Java17'
-    }
+    //tools{
+    //    maven 'Maven3'
+    //    jdk 'Java17'
+    //}
 
     stages{
         stage ("Clean up Workspace") {
@@ -15,30 +15,30 @@ pipeline {
             }
         }
 
-        stage("Build Application") {
-            steps{
-                sh "mvn clean package"
-            }
-        }
+       // stage("Build Application") {
+       //     steps{
+       //         sh "mvn clean package"
+       //     }
+       // }
 
         stage("Test Applicaiton") {
             steps{
-                sh "mvn test"
+                sh "python3 -m unittest discover"
             }
         }
 
 
         // For Sonar Qube Analysis
 
-        stage("Sonar Qube Analysis") {
-            steps{
-                script {
-                    withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
-                        sh "mv sonar:sonar"
-                    }
-                }
-            }   
-        }
+        // stage("Sonar Qube Analysis") {
+        //    steps{
+        //        script {
+        //            withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
+        //                sh "mv sonar:sonar"
+        //            }
+        //        }
+        //    }   
+        //}
 
 
         // Build and Push Docker Images
